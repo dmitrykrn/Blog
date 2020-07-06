@@ -1,0 +1,27 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()" >
+    <h1>Enter to admin dashboard</h1>
+    <div class="form-control" [ngClass]="{invalid: emailIsInvalid}">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" >
+        <div class="validation" *ngIf="emailIsInvalid">
+            <small *ngIf="emailIsEmpty">Email is empty</small>
+            <small *ngIf="emailIsNotFormatted">Email's format is not correct</small>
+        </div>
+    </div>
+    <div class="form-control" [ngClass]="{invalid: passwordIsInvalid}">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" >
+        <div class="validation" *ngIf="passwordIsInvalid">
+            <small *ngIf="passwordIsEmpty">Password is empty</small>
+            <small *ngIf="passwordIsTooShort">
+                Password is too short, minimal password length should be {{minPassLength}}.
+            </small>
+        </div>
+    </div>
+    <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled] = "form.invalid">
+        Submit
+    </button>
+</form>
