@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
-import { User } from 'src/app/core/user';
+import { LoginRequest } from 'src/app/core/login-request';
+import { AuthService } from '../../shared/services/auth.service';
+import { Router } from '@angular/router';
+import { UserToken } from 'src/app/core/user-token';
 
 @Component({
   selector: 'app-login-page',
@@ -8,29 +11,46 @@ import { User } from 'src/app/core/user';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-  form: FormGroup;
+  public form: FormGroup;
+  public errorMsg: string;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
     });
+
+    this.errorMsg = '';
+    this.authService.error$.subscribe(
+      error => this.errorMsg = error
+    );
   }
 
-  submit(){
+  public submit(){
     if (this.form.invalid) {
       return;
     }
 
-    const user: User = {
+    const request: LoginRequest = {
        email: this.form.value.email,
        password: this.form.value.password
     };
 
-    console.log(user);
-    alert(user.email + ' ' + user.password);
+    this.authService.login(request).subscribe(
+      (user: UserToken) => {
+        console.log('Login component got user', user);
+        this.form.reset();
+        this.router.navigate(['/admin', 'dashboard']);
+      },
+      (error: any) => {
+        console.log('Login component got error', error);
+      }
+    );
   }
 
   get email() {

@@ -1,6 +1,6 @@
 <nav class="navbar bg-primary">
     <h1 routerLink="/">Blog Admin</h1>
-    <ul>
+    <ul *ngIf="showMenu">
         <li routerLinkActive="active">
             <a [routerLink]="['/admin', 'dashboard']">Main</a>
         </li>

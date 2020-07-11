@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/BlogAPI/bin
+/BlogAPI/obj
+/BlogAPI/.vs
+/angular-blog/node_modules
+/angular-blog/dist
+/angular-blog/.vscode

@@ -1,5 +1,8 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()" >
-    <h1>Enter to admin dashboard</h1>
+    <h1>Login</h1>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+        {{errorMsg}}
+    </div>
     <div class="form-control" [ngClass]="{invalid: emailIsInvalid}">
         <label for="email">Email:</label>
         <input type="email" id="email" formControlName="email" >
