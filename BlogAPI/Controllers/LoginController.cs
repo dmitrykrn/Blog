@@ -25,7 +25,7 @@ namespace BlogAPI.Controllers
             var loginRes = new UserToken
             {
                 ID = $"{request.Email}.{request.Password}",
-                DisplayName = "John Smith",
+                DisplayName = "Iron Man",
                 ExpiresIn = 3600
             };
             return loginRes;

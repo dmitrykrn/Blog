@@ -29,15 +29,16 @@ export class AuthService {
   }
 
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
-    console.log('auth service got an error', error);
+    console.log('Auth service got an error', error);
 
     if ((error.error as number) === LoginError.WrongMail) {
-      console.log('wrong mail');
       this.error$.next('Wrong Email');
     }
     else if ((error.error as number) === LoginError.WrongPassword) {
-      console.log('wrong password');
       this.error$.next('Wrong Password');
+    }
+    else{
+      this.error$.next('Login Failed');
     }
 
     return throwError(error);

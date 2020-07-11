@@ -13,6 +13,7 @@ import { UserToken } from 'src/app/core/user-token';
 export class LoginPageComponent implements OnInit {
   public form: FormGroup;
   public errorMsg: string;
+  public isWaiting: boolean;
 
   constructor(
     private authService: AuthService,
@@ -29,26 +30,29 @@ export class LoginPageComponent implements OnInit {
     this.authService.error$.subscribe(
       error => this.errorMsg = error
     );
+
+    this.isWaiting = false;
   }
 
   public submit(){
     if (this.form.invalid) {
       return;
     }
-
     const request: LoginRequest = {
        email: this.form.value.email,
        password: this.form.value.password
     };
-
+    this.isWaiting = true;
     this.authService.login(request).subscribe(
       (user: UserToken) => {
         console.log('Login component got user', user);
+        this.isWaiting = false;
         this.form.reset();
         this.router.navigate(['/admin', 'dashboard']);
       },
       (error: any) => {
-        console.log('Login component got error', error);
+        // console.log('Login component got error', error);
+        this.isWaiting = false;
       }
     );
   }
