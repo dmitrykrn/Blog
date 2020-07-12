@@ -1,5 +1,6 @@
 <nav class="navbar bg-primary">
     <h1 routerLink="/">Blog Admin</h1>
+    <a  (click)="getUsers()">Get Users</a>
     <ul *ngIf="showMenu">
         <li routerLinkActive="active">
             <a [routerLink]="['/admin', 'dashboard']">Main</a>
@@ -8,7 +9,7 @@
             <a [routerLink]="['/admin', 'create']">Create</a>
         </li>
         <li>
-            <a href="#" (click)="logout($event)">Logout</a>    
+            <a href="#" (click)="logout($event)">Logout</a>
         </li>
     </ul>
 </nav>

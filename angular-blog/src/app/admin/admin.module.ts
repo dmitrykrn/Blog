@@ -10,6 +10,7 @@ import { CreatePageComponent } from './views/create-page/create-page.component';
 import { EditPageComponent } from './views/edit-page/edit-page.component';
 import { AuthService } from './shared/services/auth.service';
 import { SharedModule } from '../shared/shared.module';
+import { AuthNodeService } from './shared/services/auth.service.node';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { SharedModule } from '../shared/shared.module';
         RouterModule
     ],
     providers: [
-        AuthService
+        AuthService,
+        AuthNodeService
     ]
 })
 export class AdminModule {

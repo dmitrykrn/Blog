@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AuthNodeService } from '../../services/auth.service.node';
 
 @Component({
   selector: 'app-admin-layout',
@@ -9,9 +10,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AdminLayoutComponent implements OnInit {
 
+users: any[] = [];
+
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private nodeService: AuthNodeService
     ) { }
 
   ngOnInit(): void {
@@ -27,5 +31,12 @@ export class AdminLayoutComponent implements OnInit {
 
   public get showMenu(): boolean {
     return this.authService.isAuthenticated;
+  }
+
+  public getUsers(): any {
+    return this.nodeService.getUsers().subscribe ((users: any[]) => {
+      this.users = users;
+      console.log(this.users);
+    });
   }
 }
