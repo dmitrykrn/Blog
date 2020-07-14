@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/services/auth.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -31,9 +32,9 @@ import { AuthNodeService } from './shared/services/auth.service.node';
                 children: [
                     {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
                     {path: 'login', component: LoginPageComponent},
-                    {path: 'dashboard', component: DashboardPageComponent},
-                    {path: 'create', component: CreatePageComponent},
-                    {path: 'post/:id/edit', component: EditPageComponent }
+                    {path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
+                    {path: 'create', component: CreatePageComponent, canActivate: [AuthGuard]},
+                    {path: 'post/:id/edit', component: EditPageComponent, canActivate: [AuthGuard] }
                 ]
             }
         ])
@@ -43,7 +44,8 @@ import { AuthNodeService } from './shared/services/auth.service.node';
     ],
     providers: [
         AuthService,
-        AuthNodeService
+        AuthNodeService,
+        AuthGuard
     ]
 })
 export class AdminModule {

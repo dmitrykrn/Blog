@@ -1,7 +1,10 @@
 <form class="card" [formGroup]="form" (ngSubmit)="submit()" >
     <h1>Login</h1>
     <div class="alert alert-danger" *ngIf="errorMsg">
-        {{errorMsg}}
+      {{errorMsg}}
+    </div>
+    <div class="alert alert-info" *ngIf="message">
+      {{message}}
     </div>
     <div class="form-control" [ngClass]="{invalid: emailIsInvalid}">
         <label for="email">Email:</label>
@@ -21,8 +24,8 @@
             </small>
         </div>
     </div>
-    <button 
-        type="submit" 
+    <button
+        type="submit"
         class="btn btn-primary"
         [disabled] = "form.invalid || isWaiting">
         Submit

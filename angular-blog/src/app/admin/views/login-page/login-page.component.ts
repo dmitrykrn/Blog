@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { LoginRequest } from 'src/app/core/login-request';
 import { AuthService } from '../../shared/services/auth.service';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import { UserToken } from 'src/app/core/user-token';
 
 @Component({
@@ -14,10 +14,12 @@ export class LoginPageComponent implements OnInit {
   public form: FormGroup;
   public errorMsg: string;
   public isWaiting: boolean;
+  public message: string;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -25,13 +27,16 @@ export class LoginPageComponent implements OnInit {
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
     });
-
     this.errorMsg = '';
     this.authService.error$.subscribe(
       error => this.errorMsg = error
     );
-
     this.isWaiting = false;
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params.loginAgain) {
+        this.message = 'Enter login credentials';
+      }
+    });
   }
 
   public submit(){
