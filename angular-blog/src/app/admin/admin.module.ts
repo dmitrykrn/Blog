@@ -1,3 +1,4 @@
+import { AlertService, AlertType, Alert } from './shared/services/alert.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -13,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthNodeService } from './shared/services/auth.service.node';
 import { SearchPipe } from './shared/search.pipe';
 import { AuthGuard } from './shared/services/auth.guard';
+import { AlertComponent } from './shared/components/alert/alert.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +23,8 @@ import { AuthGuard } from './shared/services/auth.guard';
         DashboardPageComponent,
         CreatePageComponent,
         EditPageComponent,
-        SearchPipe
+        SearchPipe,
+        AlertComponent
     ],
     imports: [
         CommonModule,
@@ -46,9 +49,9 @@ import { AuthGuard } from './shared/services/auth.guard';
     ],
     providers: [
         AuthNodeService,
-        AuthGuard
+        AuthGuard,
+        AlertService
     ]
 })
 export class AdminModule {
-
 }

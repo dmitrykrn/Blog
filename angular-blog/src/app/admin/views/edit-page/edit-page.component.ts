@@ -1,29 +1,34 @@
+import { Subscription } from 'rxjs';
 import { PostsService } from './../../../shared/posts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Post } from 'src/app/core/post';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AlertService } from '../../shared/services/alert.service';
 
 @Component({
   selector: 'app-edit-page',
   templateUrl: './edit-page.component.html',
   styleUrls: ['./edit-page.component.scss']
 })
-export class EditPageComponent implements OnInit {
+export class EditPageComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isWaiting: boolean;
   post: Post;
+  updateStream: Subscription;
+  getByIdStream: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private postsService: PostsService
+    private postsService: PostsService,
+    private alert: AlertService
     ) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
     this.isWaiting = true;
     this.route.params.subscribe((params: Params) => {
       console.log('Received post id:', params.id);
-      this.postsService.getById(params.id).subscribe((post) => {
+      this.getByIdStream = this.postsService.getById(params.id).subscribe((post) => {
         this.post = post;
         this.form = new FormGroup({
           title: new FormControl(post.title, Validators.required),
@@ -39,9 +44,9 @@ export class EditPageComponent implements OnInit {
     this.isWaiting = true;
     this.post.title = this.form.get('title').value;
     this.post.content = this.form.get('content').value;
-    this.postsService.update(this.post).subscribe(post => {
+    this.updateStream = this.postsService.update(this.post).subscribe(post => {
       console.log('Post updated successfully:', post);
-      alert('Post updated successfully');
+      this.alert.success('Post was updated successfully');
     });
     this.isWaiting = false;
   }
@@ -54,5 +59,14 @@ export class EditPageComponent implements OnInit {
   isEmpty(name: string){
     const control = this.form.get(name);
     return control.errors.required;
+  }
+
+  ngOnDestroy(): void {
+    if (this.updateStream){
+      this.updateStream.unsubscribe();
+    }
+    if (this.getByIdStream){
+      this.getByIdStream.unsubscribe();
+    }
   }
 }
