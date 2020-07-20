@@ -50,3 +50,5 @@ Thumbs.db
 /angular-blog/node_modules
 /angular-blog/dist
 /angular-blog/.vscode
+/angular-blog/.idea
+/angular-blog/.vs

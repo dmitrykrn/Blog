@@ -1,4 +1,3 @@
-import { AuthGuard } from './shared/services/auth.guard';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -12,6 +11,8 @@ import { EditPageComponent } from './views/edit-page/edit-page.component';
 import { AuthService } from './shared/services/auth.service';
 import { SharedModule } from '../shared/shared.module';
 import { AuthNodeService } from './shared/services/auth.service.node';
+import { SearchPipe } from './shared/search.pipe';
+import { AuthGuard } from './shared/services/auth.guard';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { AuthNodeService } from './shared/services/auth.service.node';
         LoginPageComponent,
         DashboardPageComponent,
         CreatePageComponent,
-        EditPageComponent
+        EditPageComponent,
+        SearchPipe
     ],
     imports: [
         CommonModule,
@@ -43,7 +45,6 @@ import { AuthNodeService } from './shared/services/auth.service.node';
         RouterModule
     ],
     providers: [
-        AuthService,
         AuthNodeService,
         AuthGuard
     ]

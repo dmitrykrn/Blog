@@ -7,7 +7,7 @@ import { UserToken } from 'src/app/core/user-token';
 import { OperatorFunction, throwError, Subject } from 'rxjs';
 import { LoginError } from 'src/app/core/login-error';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private userTokenKey = 'user-token_id';
   private expirationDateKey = 'user-token-exp';
@@ -30,7 +30,6 @@ export class AuthService {
 
   handleError(error: HttpErrorResponse): Observable<HttpErrorResponse> {
     console.log('Auth service got an error', error);
-
     if ((error.error as number) === LoginError.WrongMail) {
       this.error$.next('Wrong Email');
     }
@@ -40,7 +39,6 @@ export class AuthService {
     else{
       this.error$.next('Login Failed');
     }
-
     return throwError(error);
   }
 
