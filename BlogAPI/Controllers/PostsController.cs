@@ -26,25 +26,23 @@ namespace BlogAPI.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Post> Put([FromBody] Post post)
+        public ActionResult<Post> Put([FromBody] Post updatedPost)
         {
-            _posts.RemoveAll(post => post.ID == post.ID);
-            _posts.Add(post);
-            return post;
+            _posts.RemoveAll(post => post.ID == updatedPost.ID);
+            _posts.Add(updatedPost);
+            return updatedPost;
         }
 
 
         [HttpGet]
         public ActionResult<Post[]> Get()
         {
-            Thread.Sleep(500);
             return _posts.ToArray();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Post> Get(string id)
         {
-            Thread.Sleep(500);
             var post = _posts.FirstOrDefault(post => post.ID == id);
             if (post != null)
                 return this.Ok(post);

@@ -1,5 +1,5 @@
 <nav class="navbar bg-primary">
-    <h1 routerLink="/">Blog Admin</h1>
+    <h1>Blog Admin</h1>
     <!-- <a  (click)="getUsers()">Get Users</a> -->
     <ul *ngIf="showMenu">
         <li routerLinkActive="active">
@@ -12,6 +12,7 @@
             <a href="#" (click)="logout($event)">Logout</a>
         </li>
     </ul>
+    <a *ngIf="!showMenu" [routerLink]="['/']">Back To Blog</a>
 </nav>
 <app-alert></app-alert>
 <div class="container">

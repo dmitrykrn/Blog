@@ -276,6 +276,9 @@ table th {
   opacity: 0.9;
   margin-bottom: 1rem;
   border-bottom: 1px solid var(--dark-color);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 
   &.main {
     justify-content: space-between;

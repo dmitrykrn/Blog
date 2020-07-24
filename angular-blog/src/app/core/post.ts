@@ -5,4 +5,5 @@ export class Post {
     author: string;
     content: string;
     date: Date;
+    preview: string;
 }

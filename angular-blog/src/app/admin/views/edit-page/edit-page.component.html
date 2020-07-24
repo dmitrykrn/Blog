@@ -10,7 +10,7 @@
         </div>
         <div class="form-control" [ngClass]="{invalid: isInvalid('content')}">
           <label for="content">Content:</label>
-          <quill-editor formControlName="content"></quill-editor>
+          <quill-editor formControlName="content" format="html"></quill-editor>
           <div class="validation" *ngIf="isInvalid('content')">
             <small *ngIf="isEmpty('content')">Enter post content</small>
           </div>

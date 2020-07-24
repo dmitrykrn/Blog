@@ -1,10 +1,11 @@
 import { Subscription } from 'rxjs';
 import { PostsService } from './../../../shared/posts.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Post } from 'src/app/core/post';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AlertService } from '../../shared/services/alert.service';
+import { QuillViewComponent, QuillEditorComponent } from 'ngx-quill';
 
 @Component({
   selector: 'app-edit-page',
@@ -12,6 +13,8 @@ import { AlertService } from '../../shared/services/alert.service';
   styleUrls: ['./edit-page.component.scss']
 })
 export class EditPageComponent implements OnInit, OnDestroy {
+  @ViewChild(QuillEditorComponent)
+  private quillEditor: QuillEditorComponent;
   form: FormGroup;
   isWaiting: boolean;
   post: Post;
@@ -44,9 +47,10 @@ export class EditPageComponent implements OnInit, OnDestroy {
     this.isWaiting = true;
     this.post.title = this.form.get('title').value;
     this.post.content = this.form.get('content').value;
+    this.post.preview = (this.quillEditor.quillEditor.getText() as string).substring(0, 500).trim();
     this.updateStream = this.postsService.update(this.post).subscribe(post => {
       console.log('Post updated successfully:', post);
-      this.alert.success('Post was updated successfully');
+      this.alert.success('Post was updated successfully.');
     });
     this.isWaiting = false;
   }

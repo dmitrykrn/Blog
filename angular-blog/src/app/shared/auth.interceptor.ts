@@ -1,3 +1,4 @@
+import { AlertService } from './../admin/shared/services/alert.service';
 import { catchError, tap } from 'rxjs/operators';
 import { AuthService } from './../admin/shared/services/auth.service';
 import { Injectable } from '@angular/core';
@@ -13,7 +14,10 @@ import { Router, NavigationExtras } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('Set header with auth token');
